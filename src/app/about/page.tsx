@@ -63,7 +63,7 @@ export default function AboutPage() {
       </div>
 
       {/* Bio Section */}
-      <div className="mb-16 max-w-3xl">
+      <div className="mb-16 w-full">
         <h2 className="mb-6 text-2xl font-bold tracking-tight">
           <span className="gradient-text">Biyografi</span>
         </h2>

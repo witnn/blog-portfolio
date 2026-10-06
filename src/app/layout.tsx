@@ -3,6 +3,7 @@ import { Space_Grotesk } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Navbar } from "@/components/navbar"
+import { getAboutData } from "@/lib/api"
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -10,8 +11,8 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: "Jane Doe | Blog & Portfolio",
-  description: "Personal blog and portfolio of Jane Doe, a Full-Stack Developer & UI/UX Designer.",
+  title: "Blog & Portfolio",
+  description: "Personal blog and portfolio.",
 }
 
 export default function RootLayout({
@@ -19,6 +20,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const aboutData = getAboutData()
+  
   return (
     <html lang="tr" suppressHydrationWarning>
       <body className={`${spaceGrotesk.variable} min-h-screen font-[family-name:var(--font-space)] antialiased noise`}>
@@ -32,7 +35,7 @@ export default function RootLayout({
           <div className="mesh-bg" />
 
           <div className="relative flex min-h-screen flex-col">
-            <Navbar />
+            <Navbar userName={aboutData.name} />
             <main className="flex-1 pt-16">{children}</main>
 
             {/* Footer */}

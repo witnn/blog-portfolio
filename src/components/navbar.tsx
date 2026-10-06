@@ -12,12 +12,30 @@ const navItems = [
   { path: "/about", name: "Hakkımda" },
 ]
 
-export function Navbar() {
+export function Navbar({ userName = "Jane Doe" }: { userName?: string }) {
   const pathname = usePathname() || "/"
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
+  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, opacity: 0 })
 
   useEffect(() => setMounted(true), [])
+
+  useEffect(() => {
+    if (!mounted) return
+    const timer = setTimeout(() => {
+      const activeEl = document.getElementById(`nav-${pathname}`)
+      if (activeEl) {
+        setIndicatorStyle({
+          left: activeEl.offsetLeft,
+          width: activeEl.offsetWidth,
+          opacity: 1
+        })
+      } else {
+        setIndicatorStyle(prev => ({ ...prev, opacity: 0 }))
+      }
+    }, 50)
+    return () => clearTimeout(timer)
+  }, [pathname, mounted])
 
   return (
     <header className="fixed top-0 z-50 w-full">
@@ -29,31 +47,31 @@ export function Navbar() {
               <Sparkles className="h-4 w-4 text-primary" />
             </div>
             <span className="text-lg font-bold tracking-tight">
-              <span className="gradient-text">Jane</span>
-              <span className="text-foreground/80">Doe</span>
+              <span className="gradient-text">{userName}</span>
             </span>
           </Link>
 
           {/* Nav Links */}
-          <nav className="flex items-center gap-1">
+          <nav className="relative flex items-center gap-1">
+            <motion.div
+              className="absolute inset-y-0 rounded-xl bg-primary/10 border border-primary/20"
+              initial={false}
+              animate={indicatorStyle}
+              transition={{ type: "spring", stiffness: 380, damping: 28 }}
+            />
+            
             {navItems.map((item) => {
               const isActive = item.path === pathname
               return (
                 <Link
+                  id={`nav-${item.path}`}
                   key={item.path}
                   href={item.path}
-                  className="relative px-4 py-2 text-sm font-medium transition-colors"
+                  className="relative z-10 px-4 py-2 text-sm font-medium transition-colors"
                 >
-                  <span className={`relative z-10 ${isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}>
+                  <span className={`${isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}>
                     {item.name}
                   </span>
-                  {isActive && (
-                    <motion.div
-                      className="absolute inset-0 rounded-xl bg-primary/10 border border-primary/20"
-                      layoutId="navbar-active"
-                      transition={{ type: "spring", stiffness: 380, damping: 28 }}
-                    />
-                  )}
                 </Link>
               )
             })}
