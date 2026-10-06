@@ -1,5 +1,5 @@
 {
-  "name": "Jane Doe",
+  "name": "witnn",
   "title": "Full-Stack Developer & UI/UX Designer",
   "bio": "Merhaba! Ben modern, performanslı ve estetik web uygulamaları geliştiren tutkulu bir yazılım geliştiricisiyim. Kullanıcı deneyimini (UX) ön planda tutarak, hem görsel açıdan büyüleyici hem de teknik olarak sağlam projeler üretmeyi seviyorum. Boş zamanlarımda yeni teknolojileri keşfeder, açık kaynak projelere katkıda bulunur ve tasarım trendlerini yakından takip ederim.",
   "avatar_url": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1974&auto=format&fit=crop",
@@ -23,15 +23,33 @@
   "skills": [
     {
       "category": "Frontend",
-      "items": ["React", "Next.js", "Tailwind CSS", "Framer Motion", "TypeScript"]
+      "items": [
+        "React",
+        "Next.js",
+        "Tailwind CSS",
+        "Framer Motion",
+        "TypeScript"
+      ]
     },
     {
       "category": "Backend",
-      "items": ["Node.js", "Express", "PostgreSQL", "Prisma", "REST API"]
+      "items": [
+        "Node.js",
+        "Express",
+        "PostgreSQL",
+        "Prisma",
+        "REST API"
+      ]
     },
     {
       "category": "Tools & DevOps",
-      "items": ["Git", "GitHub Actions", "Docker", "Vercel", "Figma"]
+      "items": [
+        "Git",
+        "GitHub Actions",
+        "Docker",
+        "Vercel",
+        "Figma"
+      ]
     }
   ]
 }
