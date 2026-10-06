@@ -85,8 +85,7 @@ html.dark {
 
 /* ── GLASSMORPHISM UTILITIES ── */
 .glass {
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  @apply backdrop-blur-xl saturate-[1.8];
 }
 
 html.dark .glass {
@@ -100,8 +99,7 @@ html:not(.dark) .glass {
 }
 
 .glass-card {
-  backdrop-filter: blur(24px) saturate(200%);
-  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  @apply backdrop-blur-2xl saturate-200;
 }
 
 html.dark .glass-card {
@@ -117,8 +115,7 @@ html:not(.dark) .glass-card {
 }
 
 .glass-input {
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  @apply backdrop-blur-md;
   transition: all 0.3s ease;
 }
 
