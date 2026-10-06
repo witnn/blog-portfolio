@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div className="container mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:py-24">
       {/* Hero Section */}
-      <div className="mb-16 max-w-3xl">
+      <div className="mb-16 max-w-3xl mx-auto text-center">
         <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-primary">
           ✦ Blog & Yazılar
         </p>

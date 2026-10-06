@@ -20,7 +20,7 @@ export function Navbar() {
   useEffect(() => setMounted(true), [])
 
   return (
-    <header className="sticky top-0 z-50 w-full">
+    <header className="fixed top-0 z-50 w-full">
       <div className="border-b border-white/5 bg-background/40 backdrop-blur-xl supports-[backdrop-filter]:bg-background/20">
         <div className="container mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6">
           {/* Logo */}

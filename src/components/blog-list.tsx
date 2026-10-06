@@ -47,7 +47,7 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
   return (
     <div className="flex flex-col gap-8">
       {/* Search Box */}
-      <div className="relative max-w-sm">
+      <div className="relative mx-auto w-full max-w-sm">
         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
           <Search className="h-4 w-4 text-muted-foreground" />
         </div>
