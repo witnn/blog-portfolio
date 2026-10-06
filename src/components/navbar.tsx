@@ -2,9 +2,10 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { useTheme } from "next-themes"
-import { Moon, Sun } from "lucide-react"
+import { Moon, Sun, Sparkles } from "lucide-react"
+import { useState, useEffect } from "react"
 
 const navItems = [
   { path: "/", name: "Blog" },
@@ -14,44 +15,72 @@ const navItems = [
 export function Navbar() {
   const pathname = usePathname() || "/"
   const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => setMounted(true), [])
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto flex h-16 max-w-4xl items-center justify-between px-4 sm:px-6">
-        <Link href="/" className="flex items-center space-x-2">
-          <span className="font-bold sm:inline-block">JaneDoe.</span>
-        </Link>
-        <nav className="flex items-center space-x-6 text-sm font-medium">
-          {navItems.map((item) => {
-            const isActive = item.path === pathname
-            return (
-              <Link
-                key={item.path}
-                href={item.path}
-                className={`relative px-2 py-1 transition-colors hover:text-foreground/80 ${
-                  isActive ? "text-foreground" : "text-foreground/60"
-                }`}
+    <header className="sticky top-0 z-50 w-full">
+      <div className="glass border-b border-white/5">
+        <div className="container mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6">
+          {/* Logo */}
+          <Link href="/" className="group flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 transition-all duration-300 group-hover:bg-primary/20 group-hover:shadow-[0_0_15px_hsla(265,90%,60%,0.3)]">
+              <Sparkles className="h-4 w-4 text-primary" />
+            </div>
+            <span className="text-lg font-bold tracking-tight">
+              <span className="gradient-text">Jane</span>
+              <span className="text-foreground/80">Doe</span>
+            </span>
+          </Link>
+
+          {/* Nav Links */}
+          <nav className="flex items-center gap-1">
+            {navItems.map((item) => {
+              const isActive = item.path === pathname
+              return (
+                <Link
+                  key={item.path}
+                  href={item.path}
+                  className="relative px-4 py-2 text-sm font-medium transition-colors"
+                >
+                  <span className={`relative z-10 ${isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}>
+                    {item.name}
+                  </span>
+                  {isActive && (
+                    <motion.div
+                      className="absolute inset-0 rounded-xl bg-primary/10 border border-primary/20"
+                      layoutId="navbar-active"
+                      transition={{ type: "spring", stiffness: 380, damping: 28 }}
+                    />
+                  )}
+                </Link>
+              )
+            })}
+
+            {/* Theme Toggle */}
+            {mounted && (
+              <motion.button
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="ml-2 flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 transition-all duration-300 hover:bg-white/10 hover:shadow-[0_0_15px_hsla(265,90%,60%,0.2)]"
               >
-                {item.name}
-                {isActive && (
-                  <motion.div
-                    className="absolute inset-0 z-[-1] rounded-md bg-secondary"
-                    layoutId="navbar-indicator"
-                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                  />
-                )}
-              </Link>
-            )
-          })}
-          <button
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="inline-flex items-center justify-center rounded-md p-2 hover:bg-secondary transition-colors"
-          >
-            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            <span className="sr-only">Toggle theme</span>
-          </button>
-        </nav>
+                <AnimatePresence mode="wait">
+                  {theme === "dark" ? (
+                    <motion.div key="moon" initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 10, opacity: 0 }} transition={{ duration: 0.15 }}>
+                      <Moon className="h-4 w-4 text-primary" />
+                    </motion.div>
+                  ) : (
+                    <motion.div key="sun" initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 10, opacity: 0 }} transition={{ duration: 0.15 }}>
+                      <Sun className="h-4 w-4 text-amber-500" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.button>
+            )}
+          </nav>
+        </div>
       </div>
     </header>
   )
